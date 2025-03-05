@@ -15,6 +15,12 @@ dependencies {
 
     // a library for parsing JSON
     implementation 'com.google.code.gson:gson:2.12.1'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    testCompileOnly 'org.projectlombok:lombok:1.18.36'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
 test {
