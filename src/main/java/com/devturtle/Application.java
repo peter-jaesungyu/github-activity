@@ -11,7 +11,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class Application {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         if (args.length < 1) {
             System.out.println("No command line argument error!\n<username> should be included to run this program!");
             System.out.println("github-activity <username>");
@@ -29,6 +29,12 @@ public class Application {
         try (HttpClient httpClient = HttpClient.newHttpClient()) {
 
             HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (getResponse.statusCode() != 200) {
+                System.out.println("An error has occurred when processing your request!");
+                return;
+            }
+
             String body = getResponse.body();
             JsonMapper jsonMapper = new JsonMapper();
             List<Activity> activities = jsonMapper.fromJson(body);
@@ -38,6 +44,8 @@ public class Application {
                 printOnSwitch(activity);
             }
             System.out.println("...");
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
